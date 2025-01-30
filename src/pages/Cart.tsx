@@ -3,9 +3,18 @@ import { Footer } from "@/components/Footer";
 import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus, Trash2 } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
 const Cart = () => {
   const { items, updateQuantity, removeItem, total } = useCart();
+  const { toast } = useToast();
+
+  const handleCheckout = async () => {
+    toast({
+      title: "Procesando pago",
+      description: "Por favor, configura Stripe y Supabase primero para habilitar los pagos.",
+    });
+  };
 
   if (items.length === 0) {
     return (
@@ -73,7 +82,10 @@ const Cart = () => {
           <div className="text-xl font-bold">
             Total: ${total.toFixed(2)}
           </div>
-          <Button className="w-full md:w-auto">
+          <Button 
+            className="w-full md:w-auto"
+            onClick={handleCheckout}
+          >
             Proceder al pago
           </Button>
         </div>
