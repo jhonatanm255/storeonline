@@ -4,16 +4,76 @@ import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { useEffect } from "react";
+import { supabase } from "@/lib/supabaseClient";
 
 const Cart = () => {
-  const { items, updateQuantity, removeItem, total } = useCart();
+  const { items, updateQuantity, removeItem, total, clearCart } = useCart();
   const { toast } = useToast();
 
   const handleCheckout = async () => {
-    toast({
-      title: "Procesando pago",
-      description: "Por favor, configura Stripe y Supabase primero para habilitar los pagos.",
-    });
+    try {
+      // Crear la orden en Supabase
+      const { data: order, error: orderError } = await supabase
+        .from('orders')
+        .insert([
+          { 
+            total,
+            status: 'pending'
+          }
+        ])
+        .select()
+        .single();
+
+      if (orderError) throw orderError;
+
+      // Crear los items de la orden
+      const orderItems = items.map(item => ({
+        order_id: order.id,
+        product_id: item.id,
+        quantity: item.quantity,
+        price: item.price
+      }));
+
+      const { error: itemsError } = await supabase
+        .from('order_items')
+        .insert(orderItems);
+
+      if (itemsError) throw itemsError;
+
+      // Crear sesión de Stripe
+      const { data: sessionData, error: stripeError } = await supabase
+        .functions.invoke('create-checkout-session', {
+          body: { 
+            orderId: order.id,
+            items: items.map(item => ({
+              price_data: {
+                currency: 'usd',
+                product_data: {
+                  name: item.name,
+                  images: [item.image]
+                },
+                unit_amount: Math.round(item.price * 100)
+              },
+              quantity: item.quantity
+            }))
+          }
+        });
+
+      if (stripeError) throw stripeError;
+
+      // Redirigir a Stripe
+      if (sessionData?.url) {
+        clearCart();
+        window.location.href = sessionData.url;
+      }
+    } catch (error) {
+      console.error('Error during checkout:', error);
+      toast({
+        title: "Error",
+        description: "Hubo un error al procesar el pago. Por favor, intenta de nuevo.",
+      });
+    }
   };
 
   if (items.length === 0) {
