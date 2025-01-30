@@ -1,12 +1,100 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Navbar } from "@/components/Navbar";
+import { ProductCard } from "@/components/ProductCard";
+import { Footer } from "@/components/Footer";
+
+const featuredProducts = [
+  {
+    id: "1",
+    name: "Classic Club",
+    description: "Triple-decker with turkey, bacon, lettuce, and tomato",
+    price: 12.99,
+    image: "/placeholder.svg",
+  },
+  {
+    id: "2",
+    name: "Veggie Delight",
+    description: "Fresh vegetables with hummus and avocado spread",
+    price: 10.99,
+    image: "/placeholder.svg",
+  },
+  {
+    id: "3",
+    name: "Italian Sub",
+    description: "Salami, pepperoni, ham with Italian dressing",
+    price: 13.99,
+    image: "/placeholder.svg",
+  },
+  {
+    id: "4",
+    name: "Chicken Pesto",
+    description: "Grilled chicken with fresh pesto and mozzarella",
+    price: 11.99,
+    image: "/placeholder.svg",
+  },
+];
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
+      
+      {/* Hero Section */}
+      <section className="pt-20 bg-accent">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <div className="text-center">
+            <h1 className="text-4xl md:text-6xl font-bold text-primary mb-6">
+              Delicious Sandwiches Made Fresh
+            </h1>
+            <p className="text-xl text-gray-600 mb-8">
+              Handcrafted with premium ingredients for the perfect bite
+            </p>
+            <button className="bg-primary text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-primary/90 transition-colors">
+              Order Now
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Products */}
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-center mb-12">Featured Sandwiches</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {featuredProducts.map((product) => (
+              <ProductCard key={product.id} {...product} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us */}
+      <section className="bg-accent py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-center mb-12">Why Choose Us</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <h3 className="text-xl font-semibold mb-4">Fresh Ingredients</h3>
+              <p className="text-gray-600">
+                We use only the freshest ingredients, sourced locally when possible.
+              </p>
+            </div>
+            <div className="text-center">
+              <h3 className="text-xl font-semibold mb-4">Made to Order</h3>
+              <p className="text-gray-600">
+                Each sandwich is crafted fresh when you order.
+              </p>
+            </div>
+            <div className="text-center">
+              <h3 className="text-xl font-semibold mb-4">Fast Delivery</h3>
+              <p className="text-gray-600">
+                Quick and reliable delivery to your doorstep.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
     </div>
   );
 };
