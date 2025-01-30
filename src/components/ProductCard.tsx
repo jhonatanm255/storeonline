@@ -1,5 +1,7 @@
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
+import { useCart } from "@/contexts/CartContext";
+import { useToast } from "./ui/use-toast";
 
 interface ProductCardProps {
   id: string;
@@ -10,6 +12,17 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ id, name, description, price, image }: ProductCardProps) => {
+  const { addItem } = useCart();
+  const { toast } = useToast();
+
+  const handleAddToCart = () => {
+    addItem({ id, name, price, image });
+    toast({
+      title: "Producto agregado",
+      description: `${name} ha sido agregado al carrito`,
+    });
+  };
+
   return (
     <Card className="w-full max-w-sm mx-auto overflow-hidden transition-transform duration-200 hover:scale-105">
       <CardHeader className="p-0">
@@ -28,8 +41,11 @@ export const ProductCard = ({ id, name, description, price, image }: ProductCard
         <p className="text-lg font-bold text-primary">${price.toFixed(2)}</p>
       </CardContent>
       <CardFooter className="p-4 pt-0">
-        <Button className="w-full bg-primary hover:bg-primary/90">
-          Add to Cart
+        <Button 
+          className="w-full bg-primary hover:bg-primary/90"
+          onClick={handleAddToCart}
+        >
+          Agregar al Carrito
         </Button>
       </CardFooter>
     </Card>
