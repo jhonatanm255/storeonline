@@ -1,4 +1,4 @@
-import { ShoppingCart, Menu, X } from "lucide-react";
+import { ShoppingCart, Menu as MenuIcon, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { useNavigate } from "react-router-dom";
@@ -43,23 +43,39 @@ export const Navbar = () => {
               </span>
             </Button>
             <Button variant="ghost" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isMenuOpen ? <X className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
             </Button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <Button variant="ghost" className="w-full text-left" onClick={() => navigate("/")}>Inicio</Button>
-            <Button variant="ghost" className="w-full text-left" onClick={() => navigate("/menu")}>Menú</Button>
-            <Button variant="ghost" className="w-full text-left" onClick={() => navigate("/about")}>Sobre Nosotros</Button>
-            <Button variant="ghost" className="w-full text-left" onClick={() => navigate("/contact")}>Contacto</Button>
-          </div>
+      {/* Mobile Menu with Animation */}
+      <div
+        className={`md:hidden transition-all duration-300 ease-in-out ${
+          isMenuOpen
+            ? "max-h-64 opacity-100"
+            : "max-h-0 opacity-0 overflow-hidden"
+        }`}
+      >
+        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          <Button variant="ghost" className="w-full text-left" onClick={() => {
+            navigate("/");
+            setIsMenuOpen(false);
+          }}>Inicio</Button>
+          <Button variant="ghost" className="w-full text-left" onClick={() => {
+            navigate("/menu");
+            setIsMenuOpen(false);
+          }}>Menú</Button>
+          <Button variant="ghost" className="w-full text-left" onClick={() => {
+            navigate("/about");
+            setIsMenuOpen(false);
+          }}>Sobre Nosotros</Button>
+          <Button variant="ghost" className="w-full text-left" onClick={() => {
+            navigate("/contact");
+            setIsMenuOpen(false);
+          }}>Contacto</Button>
         </div>
-      )}
+      </div>
     </nav>
   );
 };

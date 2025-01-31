@@ -1,38 +1,54 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { Users, Clock, Award } from "lucide-react";
 
 const About = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-grow container mx-auto px-4 py-8 mt-16">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl font-bold mb-8">Sobre Nosotros</h1>
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-4xl font-bold mb-8 text-center">Sobre Nosotros</h1>
           
-          <div className="prose prose-lg">
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            <div className="text-center p-6 bg-accent rounded-lg">
+              <Users className="w-12 h-12 mx-auto mb-4 text-primary" />
+              <h3 className="text-xl font-semibold mb-2">Equipo Apasionado</h3>
+              <p className="text-gray-600">
+                Nuestro equipo está dedicado a crear las mejores experiencias culinarias.
+              </p>
+            </div>
+            
+            <div className="text-center p-6 bg-accent rounded-lg">
+              <Clock className="w-12 h-12 mx-auto mb-4 text-primary" />
+              <h3 className="text-xl font-semibold mb-2">Servicio Rápido</h3>
+              <p className="text-gray-600">
+                Entrega rápida y eficiente sin comprometer la calidad.
+              </p>
+            </div>
+            
+            <div className="text-center p-6 bg-accent rounded-lg">
+              <Award className="w-12 h-12 mx-auto mb-4 text-primary" />
+              <h3 className="text-xl font-semibold mb-2">Calidad Premium</h3>
+              <p className="text-gray-600">
+                Ingredientes frescos y de la más alta calidad en cada sándwich.
+              </p>
+            </div>
+          </div>
+
+          <div className="prose max-w-none">
+            <h2 className="text-3xl font-bold mb-4">Nuestra Historia</h2>
             <p className="mb-6">
-              Bienvenidos a SandwichShop, donde la pasión por los sándwiches se encuentra con la calidad y el sabor. Desde 2015, nos hemos dedicado a crear las combinaciones más deliciosas y memorables para nuestros clientes.
+              Desde 2015, SandwichShop ha estado sirviendo los mejores sándwiches artesanales en la ciudad. 
+              Comenzamos con una simple idea: crear sándwiches excepcionales usando ingredientes frescos y de 
+              alta calidad.
             </p>
 
-            <h2 className="text-2xl font-semibold mt-8 mb-4">Nuestra Historia</h2>
+            <h2 className="text-3xl font-bold mb-4">Nuestra Misión</h2>
             <p className="mb-6">
-              Todo comenzó con una simple idea: ofrecer sándwiches artesanales de la más alta calidad, utilizando ingredientes frescos y locales. Lo que empezó como un pequeño local se ha convertido en un destino favorito para los amantes de la buena comida.
-            </p>
-
-            <h2 className="text-2xl font-semibold mt-8 mb-4">Nuestro Compromiso</h2>
-            <p className="mb-6">
-              Nos comprometemos a:
-            </p>
-            <ul className="list-disc pl-6 mb-6">
-              <li>Utilizar ingredientes frescos y de la mejor calidad</li>
-              <li>Preparar cada sándwich al momento</li>
-              <li>Ofrecer opciones para todas las preferencias dietéticas</li>
-              <li>Mantener un servicio excepcional</li>
-            </ul>
-
-            <h2 className="text-2xl font-semibold mt-8 mb-4">Nuestro Equipo</h2>
-            <p className="mb-6">
-              Nuestro equipo está formado por apasionados de la gastronomía que comparten nuestra visión de excelencia y servicio. Cada miembro aporta su creatividad y dedicación para asegurar que cada sándwich sea una obra maestra.
+              Nuestra misión es ofrecer una experiencia culinaria única a través de sándwiches artesanales 
+              preparados con pasión y los mejores ingredientes, brindando un servicio excepcional a 
+              nuestros clientes.
             </p>
           </div>
         </div>
