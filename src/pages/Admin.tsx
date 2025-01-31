@@ -1,10 +1,12 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Plus, Pencil, Trash2 } from "lucide-react";
+import { Plus, Pencil, Trash2, LogOut } from "lucide-react";
 import { useState } from "react";
 import { ProductCard } from "@/components/ProductCard";
 import { useToast } from "@/components/ui/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Admin = () => {
   const [products, setProducts] = useState([
@@ -23,7 +25,27 @@ const Admin = () => {
       image: "/placeholder.svg",
     }
   ]);
+  
   const { toast } = useToast();
+  const { signOut } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      toast({
+        title: "Sesión cerrada",
+        description: "Has cerrado sesión correctamente",
+      });
+      navigate("/");
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "No se pudo cerrar la sesión",
+        variant: "destructive",
+      });
+    }
+  };
 
   const handleAddProduct = () => {
     toast({
@@ -52,13 +74,23 @@ const Admin = () => {
       <div className="flex-grow container mx-auto px-4 py-8 mt-16">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">Panel de Administración</h1>
-          <Button 
-            className="flex items-center gap-2"
-            onClick={handleAddProduct}
-          >
-            <Plus className="h-4 w-4" />
-            Agregar Producto
-          </Button>
+          <div className="flex gap-4">
+            <Button 
+              className="flex items-center gap-2"
+              onClick={handleAddProduct}
+            >
+              <Plus className="h-4 w-4" />
+              Agregar Producto
+            </Button>
+            <Button 
+              variant="destructive"
+              className="flex items-center gap-2"
+              onClick={handleSignOut}
+            >
+              <LogOut className="h-4 w-4" />
+              Cerrar Sesión
+            </Button>
+          </div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
