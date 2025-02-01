@@ -13,65 +13,74 @@ const Cart = () => {
 
   const handleCheckout = async () => {
     try {
-      // Crear la orden en Supabase
       const { data: order, error: orderError } = await supabase
-        .from('orders')
+        .from("orders")
         .insert([
-          { 
+          {
             total,
-            status: 'pending'
-          }
+            status: "pending",
+          },
         ])
         .select()
         .single();
 
       if (orderError) throw orderError;
 
-      // Crear los items de la orden
-      const orderItems = items.map(item => ({
+      console.log("Order creado:", order);
+      console.log("Order ID:", order.id, typeof order.id);
+
+      const orderItems = items.map((item) => ({
         order_id: order.id,
         product_id: item.id,
         quantity: item.quantity,
-        price: item.price
+        price: item.price,
       }));
 
+      console.log("Order Items:", orderItems);
+
       const { error: itemsError } = await supabase
-        .from('order_items')
+        .from("order_items")
         .insert(orderItems);
 
-      if (itemsError) throw itemsError;
+      if (itemsError) {
+        console.error("Error al insertar items:", itemsError);
+        throw itemsError;
+      }
 
-      // Crear sesión de Stripe
-      const { data: sessionData, error: stripeError } = await supabase
-        .functions.invoke('create-checkout-session', {
-          body: { 
+      const response = await fetch(
+        "http://localhost:5000/create-checkout-session",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            items: items.map((item) => ({
+              name: item.name,
+              price: Math.round(item.price),
+              quantity: item.quantity,
+            })),
             orderId: order.id,
-            items: items.map(item => ({
-              price_data: {
-                currency: 'usd',
-                product_data: {
-                  name: item.name,
-                  images: [item.image]
-                },
-                unit_amount: Math.round(item.price * 100)
-              },
-              quantity: item.quantity
-            }))
-          }
-        });
+          }),
+        }
+      );
 
-      if (stripeError) throw stripeError;
+      const sessionData = await response.json();
 
-      // Redirigir a Stripe
       if (sessionData?.url) {
+        console.log("Redirigiendo a:", sessionData.url);
         clearCart();
         window.location.href = sessionData.url;
+      } else {
+        throw new Error("Error al obtener la URL del checkout de Stripe");
       }
     } catch (error) {
-      console.error('Error during checkout:', error);
+      console.error("Error durante el checkout:", error);
       toast({
         title: "Error",
-        description: "Hubo un error al procesar el pago. Por favor, intenta de nuevo.",
+        description:
+          "Hubo un error al procesar el pago. Por favor, intenta de nuevo.",
+        variant: "destructive",
       });
     }
   };
@@ -83,7 +92,9 @@ const Cart = () => {
         <div className="flex-grow flex items-center justify-center">
           <div className="text-center">
             <h2 className="text-2xl font-bold mb-4">Tu carrito está vacío</h2>
-            <p className="text-gray-600">¡Agrega algunos productos deliciosos!</p>
+            <p className="text-gray-600">
+              ¡Agrega algunos productos deliciosos!
+            </p>
           </div>
         </div>
         <Footer />
@@ -139,13 +150,8 @@ const Cart = () => {
           ))}
         </div>
         <div className="mt-8 flex flex-col items-end gap-4">
-          <div className="text-xl font-bold">
-            Total: ${total.toFixed(2)}
-          </div>
-          <Button 
-            className="w-full md:w-auto"
-            onClick={handleCheckout}
-          >
+          <div className="text-xl font-bold">Total: ${total.toFixed(2)}</div>
+          <Button className="w-full md:w-auto" onClick={handleCheckout}>
             Proceder al pago
           </Button>
         </div>

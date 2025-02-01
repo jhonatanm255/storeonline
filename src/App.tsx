@@ -10,7 +10,8 @@ import Index from "./pages/Index";
 import Cart from "./pages/Cart";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
-import Success from "./pages/Success";
+import Success from "./pages/SuccessView";
+import Cancel from "./pages/CancelView"; // Nueva ruta para cancelación
 import About from "./pages/About";
 import Menu from "./pages/Menu";
 import Contact from "./pages/Contact";
@@ -45,6 +46,7 @@ const App = () => (
                 }
               />
               <Route path="/success" element={<Success />} />
+              <Route path="/cancel" element={<Cancel />} />{" "}
               <Route path="/about" element={<About />} />
               <Route path="/menu" element={<Menu />} />
               <Route path="/contact" element={<Contact />} />
