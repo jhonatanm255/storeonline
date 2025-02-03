@@ -1,6 +1,8 @@
 import { Navbar } from "@/components/Navbar";
 import { ProductCard } from "@/components/ProductCard";
 import { Footer } from "@/components/Footer";
+import sandwich from "@/components/assets/sandwich.png";
+
 
 const featuredProducts = [
   {
@@ -37,28 +39,38 @@ const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      
+
       {/* Hero Section */}
-      <section className="pt-20 bg-accent">
+      <section
+        className="grid md:grid-cols-2 pt-12 bg-gradient-to-r from-red-500 to-orange-500 bg-hero-pattern bg-cover bg-center 
+        bg-blend-overlay"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-primary mb-6">
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
               Delicious Sandwiches Made Fresh
             </h1>
-            <p className="text-xl text-gray-600 mb-8">
+            <p className="text-xl text-gray-200 mb-8">
               Handcrafted with premium ingredients for the perfect bite
             </p>
-            <button className="bg-primary text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-primary/90 transition-colors">
+            <button className="bg-white text-orange-500 px-8 py-3 rounded-full text-lg font-semibold shadow-xl">
               Order Now
             </button>
           </div>
         </div>
+        <img
+          className="flex lg:justify-center m-auto"
+          src={sandwich}
+          alt="foto-sandwich"
+        />
       </section>
 
       {/* Featured Products */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12">Featured Sandwiches</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">
+            Featured Sandwiches
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {featuredProducts.map((product) => (
               <ProductCard key={product.id} {...product} />
@@ -70,12 +82,15 @@ const Index = () => {
       {/* Why Choose Us */}
       <section className="bg-accent py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12">Why Choose Us</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">
+            Why Choose Us
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
               <h3 className="text-xl font-semibold mb-4">Fresh Ingredients</h3>
               <p className="text-gray-600">
-                We use only the freshest ingredients, sourced locally when possible.
+                We use only the freshest ingredients, sourced locally when
+                possible.
               </p>
             </div>
             <div className="text-center">

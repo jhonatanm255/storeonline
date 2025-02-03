@@ -1,0 +1,39 @@
+mi-tienda-virtual/
+├── client/                  # Frontend (React + TypeScript + Tailwind)
+│   ├── public/              # Assets estáticos (imágenes, favicon, etc.)
+│   ├── src/
+│   │   ├── api/             # Llamadas a la API del backend
+│   │   ├── components/      # Componentes reutilizables
+│   │   ├── pages/           # Páginas de la aplicación
+│   │   │   ├── admin/       # Páginas del panel de administración
+│   │   │   ├── customer/    # Páginas del área de cliente
+│   │   │   ├── auth/        # Páginas de autenticación (login, registro)
+│   │   │   └── Home.tsx     # Página principal
+│   │   ├── styles/          # Estilos globales y de Tailwind
+│   │   ├── types/           # Tipos de TypeScript
+│   │   ├── utils/           # Funciones utilitarias
+│   │   ├── App.tsx          # Componente principal de la aplicación
+│   │   └── main.tsx         # Punto de entrada del frontend
+│   ├── tailwind.config.js   # Configuración de Tailwind
+│   ├── tsconfig.json        # Configuración de TypeScript
+│   └── package.json         # Dependencias del frontend
+│
+├── server/                  # Backend (Express)
+│   ├── controllers/         # Lógica de los endpoints
+│   ├── middleware/          # Middlewares (autenticación, validación, etc.)
+│   ├── models/              # Modelos de datos (si usas una base de datos)
+│   ├── routes/              # Rutas de la API
+│   ├── services/            # Lógica de negocio (llamadas a Firebase, Supabase, etc.)
+│   ├── utils/               # Funciones utilitarias
+│   ├── app.js               # Configuración de Express
+│   └── server.js            # Punto de entrada del backend
+│
+├── config/                  # Configuraciones globales
+│   ├── firebase.js          # Configuración de Firebase
+│   ├── supabase.js          # Configuración de Supabase
+│   └── constants.js         # Constantes globales (ej: roles, URLs)
+│
+├── .env                     # Variables de entorno
+├── .gitignore               # Archivos ignorados por Git
+├── package.json             # Dependencias del proyecto (frontend + backend)
+└── README.md                # Documentación del proyecto
